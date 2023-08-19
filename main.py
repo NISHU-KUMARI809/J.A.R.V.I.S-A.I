@@ -1,4 +1,9 @@
 import os
+import requests
+from bs4 import BeautifulSoup
+from win10toast import ToastNotifier
+import pywhatkit
+from googletrans import Translator
 import time
 from time import sleep
 import webbrowser
@@ -10,6 +15,11 @@ import openai
 import datetime
 from playsound import playsound
 import pywhatkit as pwt
+import gtts
+from tkinter import *
+import tkinter as tk
+import googletrans
+import pyttsx3
 def say(text):
     speaker=win32com.client.Dispatch("SAPI.SpVoice")
     while 1:
@@ -28,6 +38,81 @@ def takeCommand():
             return query
         except Exception as e:
             return "Some Error Occurred, Please Speak Again Sir.."
+def temperature():
+    root=tk.Tk()
+    root.geometry("350x350")
+    root.title("Temperature")
+    root.configure(bg="black")
+    y = tk.StringVar()
+    e1 = tk.Entry(root, textvariable=y)
+    l1 = tk.Label(root, text="Enter city:")
+    l1.place(x=10, y=5)
+    e1.place(x=10, y=50, height=35, width=180)
+
+    def check():
+        city = y.get()
+        search = "Weather in {}".format(city)
+        url = f"https://www.google.com/search?&q={search}"
+        req = requests.get(url)
+        sor = BeautifulSoup(req.text, "html.parser")
+        temp = sor.find("div", class_="BNeawe").text
+        l2 = tk.Label(root, text="", bg="black", fg="yellow")
+        l2.place(x=10, y=140)
+        g = f"Temperature in {city} is", temp
+        l2.configure(text=g)
+        say("Temperature of" + city+"is"+temp)
+
+    b=tk.Button(root,text="Check",command=check)
+    b.place(x=10,y=100)
+
+    root.mainloop()
+
+
+
+def ChooseLang():
+    root = Tk()
+    root.title("Languages")
+    root.configure(bg="black")
+    lang = ['afrikaans', 'albanian', 'amharic', 'arabic', 'armenian', 'azerbaijani', 'basque',
+            'belarusian', 'bengali', 'bosnian', 'bulgarian', 'catalan', 'cebuano', 'chichewa',
+            'chinese (simplified)', 'chinese (traditional)', 'corsican', 'croatian', 'czech', 'danish',
+            'dutch', 'english', 'esperanto', 'estonian', 'filipino', 'finnish', 'french', 'frisian',
+            'galician', 'georgian', 'german', 'greek', 'gujarati', 'haitian creole', 'hausa', 'hawaiian',
+            'hebrew', 'hebrew', 'hindi', 'hmong', 'hungarian', 'icelandic', 'igbo', 'indonesian', 'irish',
+            'italian', 'japanese', 'javanese', 'kannada', 'kazakh', 'khmer', 'korean', 'kurdish (kurmanji)',
+            'kyrgyz', 'lao', 'latin', 'latvian', 'lithuanian', 'luxembourgish', 'macedonian', 'malagasy',
+            'malay', 'malayalam', 'maltese', 'maori', 'marathi', 'mongolian', 'myanmar (burmese)', 'nepali',
+            'norwegian', 'odia', 'pashto', 'persian', 'polish', 'portuguese', 'punjabi', 'romanian',
+            'russian', 'samoan', 'scots gaelic', 'serbian', 'sesotho', 'shona', 'sindhi', 'sinhala', 'slovak',
+            'slovenian', 'somali', 'spanish', 'sundanese', 'swahili', 'swedish', 'tajik', 'tamil', 'telugu',
+            'thai', 'turkish', 'ukrainian', 'urdu', 'uyghur', 'uzbek', 'vietnamese', 'welsh', 'xhosa',
+            'yiddish', 'yoruba', 'zulu']
+    root.geometry("400x400")
+    options = StringVar(root)
+    options.set("Choose")
+    dropdown = OptionMenu(root, options, *lang).pack(pady=50)
+
+    def close():
+        root.destroy()
+
+    buttons = Button(root, command=close, text='Press Okay to Confirm!').pack(pady=100)
+    root.mainloop()
+
+    your_value = options.get()
+    kys = googletrans.LANGUAGES
+    for my_key, my_value in kys.values():
+        if my_value == your_value:
+            l = my_key
+    trans2 = trans1.translate(text, dest=l)
+    Text = trans2.text
+    convertAudio = gtts.gTTS(trans2.text, lang=l)
+    convertAudio.save("audiofile.mp3")
+    playsound("audiofile.mp3")
+    say("Language Translated Sir, Your Translated Text appeear on your Screen Sir")
+    print(Text)
+
+
+
 #--------------------------Main Function------------------
 if __name__ == '__main__':
     # print("pycharm")
@@ -119,6 +204,7 @@ if __name__ == '__main__':
             text = takeCommand()
             pwt.search(text)
             break
+
         if "could you please take a screenshot" in query:
             say("Sir,please tell me the name for the screenshot file")
             name=takeCommand()
@@ -128,17 +214,64 @@ if __name__ == '__main__':
             img.save(f'{name}.png')
             say("Done sir.")
             break
-        # if "alarm" in query:
-        #     say("Enter the time:")
-        #     time=input(":Enter the time:")
-        #     while True:
+        if "alarm" in query:
+            say("Enter the time:")
+            time=input("Enter the time:")
+            while True:
+                Time_Ac= datetime.datetime.now()
+                now=Time_Ac.strftime("%H:%M:%S")
+                if now==time:
+                    say("Time To Wake up Sir! ")
+                    playsound('downfall-21371.mp3')
+                    usercomand=input("Enter stop to stop the alarm")
+                    if usercomand=="stop":
+                        exit(0)
+                        # byee
+                elif now>time:
+                    break
 
+        if "translate for me" in query:
+            say("Tell me the line Sir")
+            text=takeCommand()
+            trans1= Translator()
+            say("Now Choose the language sir..")
+            ChooseLang()
+
+        if "remember that" in query:
+            rememberMsg=query.replace("remember that","")
+            rememberMsg=rememberMsg.replace("jarvis","")
+            say("You Tell me to Remind you that:"+rememberMsg)
+            remember=open("data.txt","w")
+            remember.write(rememberMsg)
+            remember.close()
+        if "what do you remember" in query:
+            remember=open("data.txt",'r')
+           # say("You Tell me that"+remember.read())
+            toast=ToastNotifier()
+            speak=pyttsx3.init()
+            speak.say("You Tell me that"+rememberMsg)
+            toast.show_toast("Alert!,You Tell me that"+rememberMsg,duration=3)
+            say("you rember me that"+remember.read())
+            time.sleep(7)
+
+        if "Google search" in query:
+            import wikipedia as googleScrap
+            query=query.replace("jarvis","")
+            query=query.replace("Google search","")
+            query=query.replace("google","")
+            say("This is what I found on the web!")
+            pywhatkit.search(query)
+            try:
+                result=googleScrap.summary(query,3)
+                say(result)
+            except:
+                say("No Speakable data available!")
+
+        if "temperature" in query:
+            temperature()
 
         if "stop" in query:
             exit()
-
-
-
 
 
 
