@@ -16,10 +16,12 @@ import datetime
 from playsound import playsound
 import pywhatkit as pwt
 import gtts
+from gtts import gTTS
 from tkinter import *
 import tkinter as tk
 import googletrans
 import pyttsx3
+import pypdf
 def say(text):
     speaker=win32com.client.Dispatch("SAPI.SpVoice")
     while 1:
@@ -28,7 +30,7 @@ def say(text):
 def takeCommand():
     r = sr.Recognizer()
     with sr.Microphone() as source:
-        r.energy_threshold = 800
+        r.energy_threshold = 900
         r.pause_threshold = 0.8
         audio = r.listen(source)
         try:
@@ -38,6 +40,66 @@ def takeCommand():
             return query
         except Exception as e:
             return "Some Error Occurred, Please Speak Again Sir.."
+def TaskExe():
+    say("Hello ,I am kit kat, your virtual A I assistant!")
+    say("How can I help you ?")
+
+def Reader():
+    say("Tell me the name of the Book!")
+    name=takeCommand()
+    if "India" in name:
+        os.startfile('F:\\PycharmProjects\\jarvis_ai\\history.pdf')
+        book=open('F:\\PycharmProjects\\jarvis_ai\\history.pdf','rb')
+        pdfreader=pypdf.PdfReader(book)
+        # pages=pdfreader.getNumPages()
+        pages=len(pdfreader.pages)
+        say(f"Number of pages in this book are {pages}")
+        say("From Which page I Have to start Reading ?")
+        numPage=input("Enter the page number:")
+        numpage1=int(numPage)
+
+        page=pdfreader.pages[numpage1]
+        text=page.extract_text()
+        say("In which Language you wana listen sir?")
+        lang=takeCommand()
+        if "Hindi" in lang:
+            trans1=Translator()
+            textHin=trans1.translate(text,"hi")
+            textm=textHin.text
+            speech=gTTS(text=textm)
+            try:
+                speech.save("book.mp3")
+                playsound("book.mp3")
+            except:
+                playsound("book.mp3")
+        else:
+            say(text)
+    if "Europe" in name:
+        os.startfile("C:/Users/HP/Downloads/NCERT-Class-10-History.pdf")
+        book = open("C:/Users/HP/Downloads/NCERT-Class-10-History.pdf", "rb")
+        pdfreader = pypdf.PdfReader(book)
+        pages = len(pdfreader.pages)
+        say(f"Number of pages in this book are {pages}")
+        say("From Which page I Have to start Reading ?")
+        numPage=input("Enter the page number:")
+        numpage1=int(numPage)
+
+        page=pdfreader.pages[numpage1]
+        text=page.extract_text()
+        say("In which Language, I have to read?")
+        lang = takeCommand()
+        if "hindi" in lang:
+            trans1 = Translator()
+            textHin = trans1.translate(text, "hi")
+            textm = textHin.text
+            speech = gTTS(text=textm)
+            try:
+                speech.save("book.mp3")
+                playsound("book.mp3")
+            except:
+                playsound("book.mp3")
+        else:
+            say(text)
 def temperature():
     root=tk.Tk()
     root.geometry("350x350")
@@ -100,7 +162,7 @@ def ChooseLang():
 
     your_value = options.get()
     kys = googletrans.LANGUAGES
-    for my_key, my_value in kys.values():
+    for my_key, my_value in kys.items():
         if my_value == your_value:
             l = my_key
     trans2 = trans1.translate(text, dest=l)
@@ -111,12 +173,12 @@ def ChooseLang():
     say("Language Translated Sir, Your Translated Text appeear on your Screen Sir")
     print(Text)
 
-
-
+TaskExe()
 #--------------------------Main Function------------------
 if __name__ == '__main__':
+
     # print("pycharm")
-    say("Hi, I am Jarvis")
+    #say("Hi, I am kit kat, your A I assistant , how can I assist you sir !")
     while True:
         print("Listening....")
         query = takeCommand()
@@ -269,10 +331,18 @@ if __name__ == '__main__':
 
         if "temperature" in query:
             temperature()
+        if "read book" in query:
+            Reader()
+
+        if "you need a break" in query:
+            say("Ok sir,You"
+                " can call me Anytime !")
+            say("Just say wake up kit kat!")
+            break
+
 
         if "stop" in query:
             exit()
-
 
 
 

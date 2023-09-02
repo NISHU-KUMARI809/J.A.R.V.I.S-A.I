@@ -1,8 +1,6 @@
-import googletrans
+#
 
-lang= googletrans.LANGUAGES
 
-print(lang.values())
 from tkinter import *
 # var1=Tk()
 # var1.title("I love you")
@@ -12,4 +10,11 @@ from tkinter import *
 # options.set("Choose You")
 # dropdown = OptionMenu(var1, options, *lang).pack(pady=120)
 # var1.mainloop()
+# from googletrans import Translator
+#
+# text=input("Enter text:")
+# trans1=Translator()
+# textHin=trans1.translate(text,"hi")
+# textm=textHin.text
+# print(textm)
 
