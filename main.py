@@ -173,7 +173,20 @@ def ChooseLang():
     say("Language Translated Sir, Your Translated Text appeear on your Screen Sir")
     print(Text)
 
+def whatsapp():
+    say("Tell me the number sir")
+    num = takeCommand()
+    pnum = f"+91{num}"
+    say("What message you want me to deliver sir")
+    typemsg = takeCommand()
+    say("Sure sir, I will send but first Tell me the timing sir...")
+    say("On which hour should I send the message sir")
 
+    hour = int(input("Enter Hour"))
+    say("Tell me the minutes sir")
+    mins = int(input("Enter Minutes"))
+    pwt.sendwhatmsg(pnum, typemsg, hour, mins)
+    say("Message send successfully")
 #--------------------------Main Function------------------
 if __name__ == '__main__':
 
@@ -188,6 +201,7 @@ if __name__ == '__main__':
             if f"Open {site[0]}".lower() in query.lower():
                 say(f"Opening {site[0]} sir...")
                 webbrowser.open(site[1])
+
         if 'hi Jarvis' in query:
             say("Hello sir ! how are you ?")
             s = takeCommand()
@@ -208,19 +222,7 @@ if __name__ == '__main__':
             say('playing'+ song)
             break
         if "send WhatsApp message for me" in query:
-            say("Tell me the number sir")
-            num =takeCommand()
-            pnum = f"+91{num}"
-            say("What message you want me to deliver sir")
-            typemsg = takeCommand()
-            say("Sure sir, I will send but first Tell me the timing sir...")
-            say("On which hour should I send the message sir")
-
-            hour = int(input("Enter Hour"))
-            say("Tell me the minutes sir")
-            mins = int(input("Enter Minutes"))
-            pwt.sendwhatmsg(pnum, typemsg,hour,mins)
-            say("Message send successfully")
+            whatsapp()
             break
         if "the time" in query:
             strfTime = datetime.datetime.now().strftime("%H:%M:%S")
