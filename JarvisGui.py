@@ -33,21 +33,22 @@ class Gui_Start(QMainWindow):
         self.gui.pushButton.clicked.connect(self.startTask)
         self.gui.pushButton_3.clicked.connect(self.close)
 
-        # self.gui.Youtube_button.clicked.connect(self.youtube_app)
+        self.gui.Youtube_button.clicked.connect(self.youtube_app)
         # self.gui.Whatshapp_3.clicked.connect(self.spotify_app)
-        # self.gui.Whatshapp.clicked.connect(self.whatsapp_app)
-        # self.gui.Chrome_button.clicked.connect(self.Chrome_app)
+        self.gui.Whatshapp.clicked.connect(self.whatsapp_app)
+        self.gui.Chrome_button.clicked.connect(self.chrome_app)
         # self.gui.Whatshapp_4.clicked.connect(self.Alarm)
         # self.gui.Whatshapp_2.clicked.connect(self.Wikipedia)
         # self.gui.Whatshapp_5.clicked.connect(self.Book_pdf)
         # self.gui.Whatshapp_6.clicked.connect(self.Maps)
         # self.gui.Whatshapp_7.clicked.connect(self.Language_Translator)
-    # def chrome_app(self):
-    #     os.startfile("chrome app")
-    # def youtube_app(self):
-    #     web.open("https://www.youtube.com/")
-    # def whatsapp_app(self):
-    #     web.open("https://web.whatshapp.com/")
+    def chrome_app(self):
+        os.startfile("chrome app")
+    def youtube_app(self):
+        main.say("Open Youtube")
+        web.open("https://www.youtube.com/")
+    def whatsapp_app(self):
+        web.open("https://web.whatshapp.com/")
     def startTask(self):
         self.gui.label1=QtGui.QMovie("UI//gifloader.gif")
         self.gui.gif1.setMovie(self.gui.label1)
