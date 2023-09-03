@@ -26,7 +26,7 @@
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap>C:/Users/HP/OneDrive/Desktop/jarvis ui/Black_Template.jpg</pixmap>
+    <pixmap>UI/Black_Template.jpg</pixmap>
    </property>
    <property name="scaledContents">
     <bool>true</bool>
@@ -74,10 +74,10 @@ color:red;</string>
   <widget class="QTextBrowser" name="Text_Time">
    <property name="geometry">
     <rect>
-     <x>1070</x>
-     <y>500</y>
+     <x>1110</x>
+     <y>510</y>
      <width>301</width>
-     <height>91</height>
+     <height>71</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -190,7 +190,7 @@ border:3px solid blue;
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap>C:/Users/HP/Downloads/Iron_Template_1.gif</pixmap>
+    <pixmap>UI/Iron_Template_1.gif</pixmap>
    </property>
    <property name="scaledContents">
     <bool>true</bool>
@@ -212,7 +212,7 @@ border:3px solid blue;
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap>C:/Users/HP/Downloads/live (1).gif</pixmap>
+    <pixmap>UI/live (1).gif</pixmap>
    </property>
    <property name="scaledContents">
     <bool>true</bool>
@@ -234,7 +234,7 @@ border:3px solid blue;
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap>C:/Users/HP/OneDrive/Desktop/jarvis ui/gifloader.gif</pixmap>
+    <pixmap>UI/gifloader.gif</pixmap>
    </property>
    <property name="scaledContents">
     <bool>true</bool>
@@ -380,7 +380,7 @@ border-bottom-left-radius:30px;
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap>C:/Users/HP/OneDrive/Desktop/jarvis ui/f1.gif</pixmap>
+    <pixmap>UI/f1.gif</pixmap>
    </property>
    <property name="scaledContents">
     <bool>true</bool>

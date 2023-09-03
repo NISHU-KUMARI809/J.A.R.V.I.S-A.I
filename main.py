@@ -7,7 +7,6 @@ from googletrans import Translator
 import time
 from time import sleep
 import webbrowser
-from playsound import playsound
 import pyautogui
 import speech_recognition as sr
 import win32com.client
@@ -22,6 +21,7 @@ import tkinter as tk
 import googletrans
 import pyttsx3
 import pypdf
+
 def say(text):
     speaker=win32com.client.Dispatch("SAPI.SpVoice")
     while 1:
@@ -173,12 +173,12 @@ def ChooseLang():
     say("Language Translated Sir, Your Translated Text appeear on your Screen Sir")
     print(Text)
 
-TaskExe()
+
 #--------------------------Main Function------------------
 if __name__ == '__main__':
 
     # print("pycharm")
-    #say("Hi, I am kit kat, your A I assistant , how can I assist you sir !")
+    say("Hi, I am kit kat, your A I assistant , how can I assist you sir !")
     while True:
         print("Listening....")
         query = takeCommand()
@@ -308,7 +308,7 @@ if __name__ == '__main__':
             remember.close()
         if "what do you remember" in query:
             remember=open("data.txt",'r')
-           # say("You Tell me that"+remember.read())
+            say("You Tell me that"+remember.read())
             toast=ToastNotifier()
             speak=pyttsx3.init()
             speak.say("You Tell me that"+rememberMsg)
