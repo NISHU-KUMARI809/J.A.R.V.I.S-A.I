@@ -1,26 +1,29 @@
-import os
-import requests
-from bs4 import BeautifulSoup
-from win10toast import ToastNotifier
-import pywhatkit
+import os #to intreact with operating system
+import requests #  to send HTTP requests, handle responses, and perform other related tasks in their Python programs.
+from bs4 import BeautifulSoup #easily to scrap information from web pages ,
+from win10toast import ToastNotifier #to show pop up Desktop notifications (Alert Messages)
+import pywhatkit # It offers functionalities such as playing YouTube videos, searching for information on Wikipedia,
+# converting text to handwriting, and sending WhatsApp messages programmatically.
 from googletrans import Translator
 import time
 from time import sleep
 import webbrowser
-import pyautogui
+import pyautogui # used for automating gui interactions
 import speech_recognition as sr
-import win32com.client
-import openai
+import win32com.client #access to many Windows-specific features and functionalities.
+import openai #provides access to natural language processing (NLP) models such as
+# GPT (Generative Pre-trained Transformer) through its API and Python library.
 import datetime
 from playsound import playsound
-import pywhatkit as pwt
-import gtts
+import pywhatkit as pwt # performing various functions like sending whtspp mesg ,
+# performing google search , converting text to handwriting and more
+import gtts   #to convert text to speech and save it aas an audio file or play it directly
 from gtts import gTTS
-from tkinter import *
+from tkinter import * # provide fast and easy way to create gui application
 import tkinter as tk
 import googletrans
-import pyttsx3
-import pypdf
+import pyttsx3 # used for text-to-speech conversion
+import pypdf # to read ,write and to manipulate pdf file in python code
 
 def say(text):
     speaker=win32com.client.Dispatch("SAPI.SpVoice")
@@ -31,7 +34,7 @@ def takeCommand():
     r = sr.Recognizer()
     with sr.Microphone() as source:
         r.energy_threshold = 900
-        r.pause_threshold = 0.8
+        r.pause_threshold = 0.9
         audio = r.listen(source)
         try:
             print("Recognizing..")
@@ -40,9 +43,7 @@ def takeCommand():
             return query
         except Exception as e:
             return "Some Error Occurred, Please Speak Again Sir.."
-def TaskExe():
-    say("Hello ,I am kit kat, your virtual A I assistant!")
-    say("How can I help you ?")
+
 
 def Reader():
     say("Tell me the name of the Book!")
@@ -175,7 +176,8 @@ def ChooseLang():
 
 def whatsapp():
     say("Tell me the number sir")
-    num = takeCommand()
+    num = int(input("Enter number:"))
+    sleep(50)
     pnum = f"+91{num}"
     say("What message you want me to deliver sir")
     typemsg = takeCommand()
@@ -191,7 +193,7 @@ def whatsapp():
 if __name__ == '__main__':
 
     # print("pycharm")
-    say("Hi, I am kit kat, your A I assistant , how can I assist you sir !")
+    say("Hi, I am jarvis, your A I assistant , how can I assist you sir !")
     while True:
         print("Listening....")
         query = takeCommand()
@@ -210,33 +212,34 @@ if __name__ == '__main__':
             say("I am fine sir!!")
             listen1 = takeCommand()
             say("Thank you sir ! its my pleasure you ask about me!")
-            break
+            # break
             # todo: Add a feature to play a specific song
 
         if "play song" in query:
             say("sir what song you want")
             song= takeCommand()
             webbrowser.open(f"https://open.spotify.com/search/{song}")
-            sleep(7)
+            sleep(13)
             pyautogui.click()
             say('playing'+ song)
-            break
+            # break
+
         if "send WhatsApp message for me" in query:
             whatsapp()
-            break
+            # break
         if "the time" in query:
             strfTime = datetime.datetime.now().strftime("%H:%M:%S")
             say(f"Sir the time is{strfTime}")
-            break
+            # break
         if "open Excel".lower() in query.lower():
             os.system(f"start excel")
-            break
+            # break
         if "open Word".lower() in query.lower():
             os.system(f"start winword")
 
         if "open PowerPoint".lower() in query.lower():
             os.system(f"start powerpnt")
-            break
+            # break
 
         if "open Browser".lower() in query.lower():
             say("Sure Sir, first tell me the website")
@@ -246,17 +249,16 @@ if __name__ == '__main__':
             web=initial1+initial2+initial3
             # web=input("Enter website sir: ")
             os.system(f"start chrome {web}")
-            break
+            # break
 
         if "open camera" in query:
             os.system(f"start microsoft.windows.camera:")
             sleep(7)
             pyautogui.click()
-            break
 
         if "open Notepad" in query:
             os.system(f"start notepad")
-            break
+            # break
 
         if "play video" in query:
             say("Which video you want to play Sir")
@@ -267,7 +269,7 @@ if __name__ == '__main__':
             say("What do you want me to search Sir")
             text = takeCommand()
             pwt.search(text)
-            break
+            # break
 
         if "could you please take a screenshot" in query:
             say("Sir,please tell me the name for the screenshot file")
@@ -278,7 +280,7 @@ if __name__ == '__main__':
             img.save(f'{name}.png')
             say("Done sir.")
             break
-        if "alarm" in query:
+        if "set alarm" in query:
             say("Enter the time:")
             time=input("Enter the time:")
             while True:
@@ -344,6 +346,7 @@ if __name__ == '__main__':
 
 
         if "stop" in query:
+            say("ok sir thank you")
             exit()
 
 
