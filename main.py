@@ -24,6 +24,7 @@ import tkinter as tk
 import googletrans
 import pyttsx3 # used for text-to-speech conversion
 import pypdf # to read ,write and to manipulate pdf file in python code
+import pygame
 
 def say(text):
     speaker=win32com.client.Dispatch("SAPI.SpVoice")
@@ -219,10 +220,10 @@ if __name__ == '__main__':
             say("sir what song you want")
             song= takeCommand()
             webbrowser.open(f"https://open.spotify.com/search/{song}")
-            sleep(13)
+            sleep(10)
             pyautogui.click()
             say('playing'+ song)
-            # break
+
 
         if "send WhatsApp message for me" in query:
             whatsapp()
@@ -287,14 +288,22 @@ if __name__ == '__main__':
                 Time_Ac= datetime.datetime.now()
                 now=Time_Ac.strftime("%H:%M:%S")
                 if now==time:
+                    # Initialize pygame mixer
+                    pygame.mixer.init()
+
                     say("Time To Wake up Sir! ")
-                    playsound('downfall-21371.mp3')
-                    usercomand=input("Enter stop to stop the alarm")
-                    if usercomand=="stop":
-                        exit(0)
-                        # byee
-                elif now>time:
-                    break
+
+                    # Load the music file
+                    pygame.mixer.music.load('downfall-21371.mp3')
+
+                    # Play the music indefinitely
+                    pygame.mixer.music.play(loops=-1)
+
+                    # Wait for the user to stop the music
+                    input("Press Enter to stop the music...")
+
+                    # Stop the music
+                    pygame.mixer.music.stop()
 
         if "translate for me" in query:
             say("Tell me the line Sir")
@@ -333,18 +342,16 @@ if __name__ == '__main__':
             except:
                 say("No Speakable data available!")
 
-        if "temperature" in query:
+        if "show me the temperature" in query:
             temperature()
-        if "read book" in query:
+        if "I want to read a book" in query:
             Reader()
 
         if "you need a break" in query:
             say("Ok sir,You"
                 " can call me Anytime !")
-            say("Just say wake up kit kat!")
+            say("Just say wake up jarvis!")
             break
-
-
         if "stop" in query:
             say("ok sir thank you")
             exit()
